@@ -1,0 +1,49 @@
+<div class="mx-auto container text-center show" id="upForm">
+  <%= render 'form' %>
+</div>
+
+<!-- Add a button to show the popup -->
+<button class="mt-4 font-source-serif-pro text-[#500000] hover:underline hover:underline-offset-4" onclick="togglePopup()">Show Upload Instructions for Adding New Course</button>
+<!-- Add the popup with steps -->
+<div id="upload-popup" class="fixed top-0 left-0 w-full h-full flex items-center justify-center hidden">
+  <div class="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-50"></div>
+  <div class="bg-white w-4/5 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+    <div class="py-4 px-6">
+      <div class="flex justify-between items-center pb-3">
+        <p class="text-2xl font-bold">Upload Instructions</p>
+        <button class="bg-gray-800 text-white close-popup">&times;</button>
+      </div>
+      <div class="mb-2">
+        <p class="text-lg font-bold mb-2">Step 1</p>
+        <p class="text-gray-700">Uplaod a singular ZIP file containing the students' information which can be retrieved from the TAMU Howdy Portal. You are not required to change anything in the file.</p>
+      </div>
+      <div class="mb-2">
+        <p class="text-lg font-bold mb-2">Step 2</p>
+        <p class="text-gray-700">Fill the course information inside the form on this page in the following format:</p>
+        <ul class="list-disc list-inside text-gray-700">
+        <li>Course Code: ABCD 123 or ABC 123</li>
+        <li>Section code: 123</li>
+        <li>Semester Code: Fall 1234 or Spring 1234</li>
+        </ul>
+        <br>
+        <p class="text-red-700">Note: Make sure you input the information in the required format, else the course won't be added</p>
+      </div>
+      <div class="flex justify-end pt-2">
+        <button class="px-4 bg-transparent p-3 rounded-lg text-blue-500 hover:bg-gray-100 hover:text-blue-400 mr-2 close-popup">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add the JavaScript to show and hide the popup -->
+<script>
+  function togglePopup() {
+    document.getElementById('upload-popup').classList.toggle('hidden');
+  }
+
+  document.querySelectorAll('.close-popup').forEach((button) => {
+    button.addEventListener('click', togglePopup);
+  });
+</script>
+
+

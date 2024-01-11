@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+    <title>TAMU SKS</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <% unless Rails.env.test? %> <!-- the step "When I sign in" does not allow access if the following line runs, some error with rbg() happens, thus only run the following line if i'm in production or development-->
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <% end %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  
+
+  <body class="flex flex-col z-30 bg-gray-200">
+    <% unless (controller_name == "users") or (controller_name == "static") or (controller_name == "sessions") or (controller_name == "devise")%>
+    <header class="hd mb-1 border-bottom sticky-top">
+    <div class="flex flex-col w-screen">
+        <div class="text-[#500000] flex flex-row justify-between bg-[#DBABAB] drop-shadow-lg border-b-2 border-b-gray-400 pl-5 items-center">
+            <a href="/home" class="">
+                <%= image_tag("k2.png", :size => "200x83") %>
+            </a>
+
+            <ul class="flex font-mono flex-row w-[27rem] justify-between items-center">
+                <li><a href="/home" class="hover:font-medium hover:bg-[#ca8484] hover:pt-3 hover:pl-3 hover:pr-3 hover:pb-4 hover:rounded-xl hover:underline hover:underline-offset-4 nav-link px-2 link-light">Home</a></li>
+                <li><a href="/courses" class="hover:font-medium hover:bg-[#ca8484] hover:pt-3 hover:pl-3 hover:pr-3 hover:pb-4 hover:rounded-xl hover:underline hover:underline-offset-4 nav-link px-2 link-light">Courses</a></li>
+                <li><a href="/students" class="hover:font-medium hover:bg-[#ca8484] hover:pt-3 hover:pl-3 hover:pr-3 hover:pb-4 hover:rounded-xl hover:underline hover:underline-offset-4 nav-link px-2 link-light">Students</a></li>
+                <li><a href="/upload" class="hover:font-medium hover:bg-[#ca8484] hover:pt-3 hover:pl-3 hover:pr-3 hover:pb-4 hover:rounded-xl hover:underline hover:underline-offset-4 nav-link px-2 link-light">Upload</a></li>
+            </ul>
+
+            <div class="p-10">
+
+              <div class="z-50 dropdown inline-block font-mono relative">
+                <button class="bg-[#ca8484] text-gray-700 font-semibold py-2 px-8 rounded inline-flex text-left">
+                  <span class="mr-1">Settings</span>
+                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+                </button>
+                <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+                  <li class="rounded-b bg-gray-300 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" >
+                    <%= button_to(
+                      "Log Out",
+                      users.sign_out_path,
+                      method: :delete
+                    ) %>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+    </header>
+    <% end %>
+    <% if notice %>
+        <p class="alert alert-success m-2 font-mono font-medium bg-[#DBABAB] pt-3 pl-3 pr-3 pb-4 rounded-xl underline underline-offset-4 nav-link px-2 link-light"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+        <p class="alert alert-danger m-2 font-mono font-medium bg-[#ca8484] pt-3 pl-3 pr-3 pb-4 rounded-xl underline underline-offset-4 nav-link px-2 link-light"><%= alert %></p>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>

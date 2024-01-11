@@ -1,0 +1,74 @@
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.4/tailwind.min.css">
+</head>
+
+<div class="flex flex-col justify-center my-3">
+  <div class="mx-auto font-source-serif-pro font-semibold flex flex-row justify-between w-1/2 text-[#500000] text-[1rem] ">
+    <div class="col">
+      <div class="row hover:bg-gray-300 w-auto py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+        <%= button_to "View course history", courses_history_path(@course), :method => :get, class: "hover:underline hover:underline-offset-4" %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row hover:bg-gray-300 w-auto py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+        <%= button_to "Back to courses", courses_path, :method => :get, class: "hover:underline hover:underline-offset-4" %>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <div class="bg-white flex flex-row justify-between my-6 w-full rounded-xl mx-10">
+      <div class="h-auto w-1/2 py-3 px-8 flex flex-col">
+          <div class="mx-4 px-5 py-2 text-center w-auto my-2 border border-2 border-dashed border-gray-300 rounded font-source-serif-pro text-[2.5rem] text-[#500000]">
+            <h1> <%= @course.course_name %></h1>
+          </div>
+          <div class="flex justify-center w-[10rem] mx-auto border border-[#500000] border-dashed py-[0.5rem] rounded mt-4 mb-4 bg-[#ebd1d1] hover:bg-[#e6c4c4] hover:border-solid hover:cursor-pointer">
+          <%= button_to "Edit this course ✏️", edit_course_path(@course), :method => :get %>
+                  </div>
+                  
+                          <div class="flex justify-center w-[10rem] mx-auto border border-[#500000] border-dashed py-[0.5rem] rounded mt-4 mb-4 bg-[#ebd1d1] hover:bg-[#e6c4c4] hover:border-solid hover:cursor-pointer">
+                          <span><%= button_to "New student", new_student_path(course_id: @course.id), :method => :get %></span>
+                                  </div>        
+                          
+
+        <div class="flex flex-col w-auto text-[#500000]">
+              <div class="rounded border border-dashed border-gray-400 mt-10 px-5 py-2 mb-4">
+                <h3 class="font-source-serif-pro text-center my-2 text-[1.25rem]">View Selection:</h3>
+                <div class="font-source-serif-pro flex flex-col">
+                  <div class="flex flex-row justify-between text-center w-full">
+                    <div class="flex flex-col p-3">
+                      Order:
+                      <%= form_with(method: "get", class: "rounded-2xl") do |f| %>
+                      <%= f.select("sortOrder", ["Alphabetical", "Reverse Alphabetical"], {}, class: "mt-2 rounded") %>
+                    </div>
+                    <div class="flex flex-col p-3">
+                        Semester:
+                        <% selected_semester = nil%>
+                        <%= f.select("selected_semester", @semesters, {:include_blank => true}, {class: "mt-2 rounded", :onchange => "selected_semester=this.value;"}) %>
+                    </div>
+                    <div class="flex flex-col p-3">
+                        Section: <br>
+                        <% selected_section = nil%>
+                        <%= f.select("selected_section", @sections, {:include_blank => true}, {class: "mt-2 rounded", :onchange => "selected_section=this.value;"}) %>
+                    </div>
+                    <div class="flex flex-col p-3">
+                        Tags: <br>
+                        <% selected_tag = nil%>
+                        <%= f.select("selected_tag", @tags, {:include_blank => true}, {class: "mt-2 rounded", :onchange => "selected_tag=this.value;"}) %>
+                    </div>
+                  </div>
+                  <div class="flex justify-center w-[10rem] mx-auto border border-[#500000] border-dashed py-[0.5rem] rounded mt-4 mb-4 bg-[#ebd1d1] hover:bg-[#e6c4c4] hover:border-solid hover:cursor-pointer">
+                    <%= f.submit "Filter Students List", class: "hover:cursor-pointer"%>
+                    <% end %>
+                  </div>
+                </div>
+                
+              </div>
+        </div>
+      </div>
+      <div class = "w-1/2 py-3 px-6">
+      <%= render partial: "courses/partials/students" %>
+      </div>
+    </div>
+  </div>
+</div>

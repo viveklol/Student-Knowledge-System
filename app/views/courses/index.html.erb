@@ -1,0 +1,51 @@
+
+
+<div class="p-2 flex justify-center text-[#500000] w-5/6 drop-shadow-xl rounded mx-auto my-4 bg-gray-100"id="coursesDiv">
+  <table class="my-2 table table-striped table-hover text-center">
+    <thead class="">
+      <tr>
+        <th class="font-source-serif-pro text-[1.5rem]"colspan="5">
+          <h1>Courses</h1>
+        </th>
+      </tr>
+      <tr>
+        <th class="font-source-serif-pro">
+          Course Name: <br>
+          <%= form_tag('/courses', method: :get) do %>
+            <%= text_field_tag :search_course, params[:search_course], placeholder: "Search by Name", class: "rounded w-3/4 mt-2 mb-3"%>
+            <%= submit_tag 'Search Name', :name => nil, class: "cursor-pointer hover:underline hover:underline-offset-4 py-1 px-3 mb-[1rem] border-2 rounded border-dotted border-[#500000]" %>
+          <% end %>
+        </th>
+        <th class="font-source-serif-pro">
+          Semester(s): <br>
+          <%= form_tag('/courses', method: :get) do %>
+            <%= text_field_tag :search_semester, params[:search_semester], placeholder: "Search by Semester", class: "rounded w-3/4 mt-2 mb-3" %>
+            <%= submit_tag 'Search Semester', :name => nil, class: "cursor-pointer hover:underline hover:underline-offset-4 mb-[1rem] py-1 px-3 border-2 rounded border-dotted border-[#500000]" %>
+          <% end %>
+        </th>
+        <th class="font-source-serif-pro">
+          Student Name: <br>
+          <%= form_tag('/courses', method: :get) do %>
+            <%= text_field_tag :search_student, params[:search_student], placeholder: "Search by Student", class: "rounded w-3/4 mt-2 mb-3" %>
+            <%= submit_tag 'Search Student', :name => nil, class: "cursor-pointer hover:underline hover:underline-offset-4 py-1 px-3 mb-[1rem] border-2 rounded border-dotted border-[#500000]" %>
+          <% end %>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody class="hover:bg-gray-300 font-source-serif-pro border"> 
+      <tr class="py-2">
+          <%= render partial: 'courses/partials/course', class: 'custom-tbody' %>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer class="flex justify-center hd footer mt-auto text-center ">
+  <div class="font-source-serif-pro font-semibold hover:bg-gray-300 text-[#500000] text-[1rem] container w-auto hover:underline hover:underline-offset-4 py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+    <%= button_to "New course", upload_index_path, :method=>:get  %>
+  </div>
+  <div class="font-source-serif-pro font-semibold hover:bg-gray-300 text-[#500000] text-[1rem] container w-auto hover:underline hover:underline-offset-4 py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+    <%= button_to "Archived Courses", archived_courses_path, :method=>:get  %>
+  </div>
+</footer>

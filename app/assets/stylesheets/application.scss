@@ -1,0 +1,34 @@
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+// @import "bootstrap";
+// @import "tailwindcss/base";
+// @import "tailwindcss/components";
+// @import "tailwindcss/utilities";
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Eczar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+// .hd {
+//     background-color: #500000;
+//     color: white;
+//     font-family: Arial, Helvetica, sans-serif;
+//  }
+
+// .dropzone {
+//     border: 2px dashed #500000;
+//     border-radius: 5px;
+//     background: white;
+//     padding: 50px;
+//     margin: 10%;
+// }
+
+// .message {
+//     color: #500000;
+//     text-align: center;
+//     font-size: 1.5em;
+// }

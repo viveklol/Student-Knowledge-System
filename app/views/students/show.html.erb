@@ -1,0 +1,120 @@
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.4/tailwind.min.css">
+</head>
+
+<div class="bg-white py-8 flex flex-row mx-auto justify-center text-[#500000] w-3/4 drop-shadow-xl rounded my-4 bg-gray-100">
+  <div class="flex justify-center items-center w-1/4 p-8">
+    <div class="w-full h-full">
+      <% if @student.image.attached? %>
+          <%= image_tag @student.image.variant(:thumb) %>
+      <% else %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" class="bi bi-person rounded-circle" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+          </svg>
+      <% end %>
+    </div>
+  </div>
+  <div class="w-3/4">
+    <h1 class="font-source-serif-pro text-[1.5rem]"><%= @student.firstname%> <%= @student.lastname%>'s Profile</h1>
+    <div class="row">
+        <div class="font-source-serif-pro" id="<%= dom_id @student %>">
+          <%# Removed render because info format isn't ideal %>
+          <p class="font-source-serif-pro">
+            <strong>Time Until Next Practice:</strong>
+            <% seconds_remaining = (@student.last_practice_at + @student.curr_practice_interval.to_i.minutes) - Time.now %>
+            <% if seconds_remaining >= 0 %>
+              <% days = (seconds_remaining / 1.day).floor %>
+              <% hours = ((seconds_remaining % 1.day) / 1.hour).floor %>
+              <% minutes = ((seconds_remaining % 1.hour) / 1.minute).floor %>
+              <%= "#{days} day#{days == 1 ? '' : 's'} #{hours} hour#{hours == 1 ? '' : 's'} #{minutes} minute#{minutes == 1 ? '' : 's'}" %>
+            <% else %>
+              Practice Now!
+            <% end %>
+          </p>
+
+            <p class="font-source-serif-pro">
+              <strong>UIN:</strong>
+              <%= @student.uin %>
+            </p>
+
+            <p>
+              <strong>Email:</strong>
+              <%= @student.email %>
+            </p>
+
+            <p>
+              <strong>Classification:</strong>
+              <%= @student.classification %>
+            </p>
+
+            <p>
+              <strong>Major:</strong>
+              <%= @student.major %>
+            </p>
+
+            <p>
+              <strong>Course History:</strong>
+              <%=@course_history%>
+            </p>
+
+            <p>
+              <strong>Tags:</strong>
+              <% if StudentsTag.where(student_id: @student.id).length == 0 %>
+                  None
+              <% else %>
+                  <% tag_display_array = [] %>
+                  <% StudentsTag.where(student_id: @student.id).each do |association| %>
+                      <% tag_display_array.append(Tag.where(id: association.tag_id)[0].tag_name) %>
+                  <% end %>
+                  <p><%= tag_display_array.join(", ") %></p>
+              <% end %>
+            </p>
+            <p>
+            <strong>Notes:</strong>
+            <% if @student.notes.present? %>
+              <ul class="list-none p-0">
+                <% @student.notes.each do |note| %>
+                  <li class="mb-2">
+                    <div class="border border-gray-300 p-1 rounded shadow mr-2 relative">
+                      <div class="mb-2">
+                        <%= note.content %>
+                      </div>
+                      <div class="text-sm mb-2 absolute bottom-0 left-2">
+                        <i>Added by: <%= note.added_by %>, <%= note.added_at.strftime('%B %d, %Y %I:%M %p') %></i>
+                      </div>
+                      <div class="flex justify-end mt-2">
+                        <%= link_to 'Edit', edit_student_note_path(@student, note), class: 'text-blue-500' %>
+                        <%= form_with(model: [@student, note], method: :delete, local: true) do |form| %>
+                          <%= form.submit 'Delete', class: 'text-red-500 ml-2' %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              No notes available.
+            <% end %>
+          </p>            
+        </div>
+    </div>
+  </div>
+</div>
+
+<footer class="flex flex-row w-1/2 justify-center mx-auto hd footer mt-4 text-center mb-6">
+  <div class="flex justify-between">
+        <div class="mr-4 font-source-serif-pro font-semibold hover:bg-gray-300 text-[#500000] text-[1rem] hover:underline hover:underline-offset-4 py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+          <%= button_to "Add Notes", student_add_notes_path(@student), :method => :get %>
+        </div>
+        <div class="mr-4 font-source-serif-pro font-semibold hover:bg-gray-300 text-[#500000] text-[1rem] hover:underline hover:underline-offset-4 py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+          <%= button_to "Edit this student", edit_student_path(@student), :method => :get %>
+        </div>
+        <div class="mr-4 font-source-serif-pro font-semibold hover:bg-gray-300 text-[#500000] text-[1rem] hover:underline hover:underline-offset-4 py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+          <%= link_to "Back to students", :back, :method=>:get  %>
+        </div>
+        <div class="font-source-serif-pro font-semibold hover:bg-gray-300 text-[#500000] text-[1rem] hover:underline hover:underline-offset-4 py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+            <%= button_to "Delete this student", student_path(:id=>@student.id, :type => "all"), method: :delete %>
+        </div>
+  </div>
+</footer>

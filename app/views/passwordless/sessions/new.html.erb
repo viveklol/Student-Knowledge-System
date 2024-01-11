@@ -1,0 +1,40 @@
+<div class="bg-gray-200 h-screen w-screen p-[6rem]"=>
+  <div class="drop-shadow-2xl text-center mx-auto rounded-xl bg-[#DBABAB] h-[35rem] w-[30rem] border-4 border-[#9B6262]">
+  <%= form_with model: @session, url: send(Passwordless.mounted_as).sign_in_path, data: { turbo: 'false' } do |f| %>
+      <% email_field_name = :"passwordless[#{@email_field}]" %>
+      <h1 class="font-dancing-script text-[#500000] text-[3.5rem] mt-[7rem]"> Welcome Back! </h1>
+      <p class="font-serif text-[#500000] mt-2"> Please note that this link is one-time use only.</p>
+      <div class="flex flex-col items-center font-serif">
+
+          <%= text_field_tag email_field_name, params.fetch(email_field_name, nil), required: true, class: "rounded w-3/4 mt-4 mb-3" %>
+
+
+          <%= f.submit I18n.t('passwordless.sessions.new.submit'), class: "rounded-md text-[1rem] font-serif p-2 bg-gray-200 border-2 w-3/4 border-[#9B6262] hover:bg-gray-300"%>
+
+      </div>
+
+
+<%#      <div class="flex flex-col items-center font-serif mt-4">
+<%#      <script src="https://accounts.google.com/gsi/client"></script>
+<%#      <%= content_tag(:div, "", id: "g_id_onload", 
+<%#                      data: {client_id: Rails.application.credentials[:GOOGLE_CLIENT_ID], 
+<%#                            login_uri: "#{Rails.application.credentials.dig(Rails.env.to_sym, :domain)}/auth/google_oauth2/callback",
+<%#                            auto_prompt: "false"}) %>
+<%#      <%= content_tag(:div, "", class: "g_id_signin",
+<%#                      data: {type: "standard",
+<%#                            size: "large",
+<%#                            theme: "outline",
+<%#                            text: "sign_in_with",
+<%#                            shape: "rectangular",
+<%#                            logo_alignment: "left"}) %>
+<%#
+<%#      </div>
+
+      <%= link_to "Sign in with Google", "/auth/google_oauth2/callback"%>
+      <%# <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, method: :post %>
+      <%# <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path %>
+
+    <% end %>
+      <%= button_to "Sign in with Google", "/auth/google_oauth2", class: "rounded-md text-[1rem] font-serif p-2 bg-gray-200 border-2 w-3/4 border-[#9B6262] hover:bg-gray-300 mt-5"%>
+  </div>
+</div>

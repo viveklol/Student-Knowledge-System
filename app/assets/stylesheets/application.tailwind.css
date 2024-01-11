@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Eczar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+
+
+@layer components {
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  .custom-tr {
+    border-bottom: 1px solid #E5E7EB; /* add a border at the bottom of each row */
+  }
+  
+  .custom-td {
+    padding-top: 6.5px; /* add padding to each cell */
+    padding-bottom: 6.5px;
+  }
+
+  
+}
+
+

@@ -1,0 +1,13 @@
+<div class="container text-center">
+
+  <h1>New course</h1>
+
+<%= render "form", course: @course %>
+
+
+  <br>
+
+  <div class="flex-container" style="justify-content:space-evenly;">
+     <%= button_to "Back to courses", courses_path, :method=>:get  %>
+  </div>
+</div>

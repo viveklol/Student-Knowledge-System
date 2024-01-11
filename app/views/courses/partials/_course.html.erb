@@ -1,0 +1,20 @@
+<% @courses.each do |course| %>
+  <tr class="even:bg-white odd:bg-gray-100 custom-tr hover:bg-gray-200 text-center" onclick="window.location='<%= course_path(course.records.to_a[0]) %>'" style="cursor: pointer;">
+    <td colspan="2">
+      <div class="custom-td">
+        <%# <strong>Course name:</strong> %>
+        <%= course.course_name %>
+      </div>
+    </td>
+
+    <td>
+      <div class="custom-td">
+        <%# <strong>Semesters:</strong> %>
+        <%= course.semesters.to_a.join(", ") %>
+      </div>
+    </td>
+
+
+  </tr>
+<% end %>
+

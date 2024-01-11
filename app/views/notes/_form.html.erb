@@ -1,0 +1,8 @@
+<%= form_for [@student, @note] do |f| %>
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+    <input type="hidden" name="note[student_id]" value="<%= @student.id %>">
+  </div>
+  <%= f.submit 'Save Note', class: 'btn btn-primary' %>
+<% end %>

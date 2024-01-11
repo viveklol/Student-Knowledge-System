@@ -1,0 +1,55 @@
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.4/tailwind.min.css">
+</head>
+
+<div class="text-center shadow-lg bg-gray-100 text-[#500000] rounded-xl w-4/5 mx-auto my-4 border-2 border-gray-300">
+<h1 class="mx-auto py-2 text-center w-4/5 my-4 border border-2 border-dashed border-gray-400 rounded font-source-serif-pro text-[#500000] text-[1.5rem] font-bold"> <%= @course_records[0].course_name %> History</h1>
+
+<div class="flex justify-center text-[#500000]">
+  <div class="flex justify-between w-1/2 flex flex-row font-source-serif-pro font-semibold hover:underline hover:underline-offset-4">
+    <div class="col">
+      <div class="hover:bg-gray-200 w-auto py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+        <%= button_to "Show this course profile", @course, :method => :get, class: 'hover:underline hover:underline-offset-4' %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="hover:bg-gray-200 w-auto py-1 px-3 border-2 rounded border-dotted border-[#500000]">
+        <%= button_to "Back to courses", courses_path, :method=>:get, class: 'hover:underline hover:underline-offset-4'  %>
+      </div>
+    </div>       
+  </div>
+</div>
+
+    <table class="text-[#500000] mt-4 mb-8 mx-auto w-5/6 h-auto overflow-y-scroll shadow-lg rounded-lg table-fixed text-center">
+        <thead>
+      <tr class="bg-slate-400 font-medium font-source-serif-pro">
+        <th class="rounded-tl-lg px-auto py-2"> Semester: </th>
+        <th class="border-l-[0.05rem] border-r-[0.05rem] px-auto py-2"> Section: </th>
+        <th class="border-l-[0.05rem] px-auto py-2"> </th>
+        <th class="rounded-tr-lg px-auto py-2"> </th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <% @course_records.each do |course| %>
+        <tr class="even:bg-gray-100 odd:bg-gray-200 hover:bg-gray-300">
+            <td class="p-2 font-source-serif-pro font-light">
+                <%# <strong>Semester:</strong> %>
+                <%= course.semester %>
+            </td>
+            <td class="p-2 font-source-serif-pro font-light">
+                <%# <strong>Section:</strong> %>
+                <%= course.section %>
+            </td>
+            <td class="p-2 font-source-serif-pro font-light">
+                <%= button_to "Edit this course", edit_course_path(course), :method => :get, class: 'hover:underline hover:underline-offset-4' %>
+            </td>
+            <td class="p-2 font-source-serif-pro font-light">
+                <%= button_to "Delete", @course, method: :delete, class: 'hover:underline hover:underline-offset-4' %>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,52 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.4/tailwind.min.css">
+</head>
+
+
+<div class="mx-auto w-3/4 text-center">
+
+  <div class="flex mt-6 flex-row justify-between bg-white p-4 rounded-xl drop-shadow-xl font-source-serif-pro font-light">
+      <div class="rounded-xl">
+        <% if @student.image.attached? %>
+        <%= image_tag @student.image.variant(:thumb),class: 'mx-auto py-4 px-4 rounded', style: 'max-width: 20rem;' %>
+        <% else %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" class="bi bi-person rounded-square" viewBox="0 0 16 16">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+        </svg>
+        <% end %>
+      </div>
+
+      <div class="flex mx-4 w-full flex-col justify-center">
+          <% if @correctAnswer.nil? %>
+          <% elsif @correctAnswer == true %>
+          <p class="font-source-serif-pro my-4" style="color: green">Correct Answer!</p>
+          <% else %>
+          <p class="font-source-serif-pro my-4" style="color: red">Incorrect Answer. The correct answer was <%= @student.firstname %> <%= @student.lastname %></p>
+          <% end %>
+    
+        <% if @correctAnswer.nil? %>
+        <div class="bg-light border rounded-3 p-4">
+          <form action=<%="/students/"+@student.id.to_s + "/quiz" %> class="py-2">
+            <% @choices.each do |choice| %>
+            <% name = Student.where(id:choice,teacher: current_user.email).pick(:firstname, :lastname) %>
+            <% name = name[0] + " " + name[1] %>
+            <div class="flex items-center space-x-2">
+              <input type="radio" name="answer" value=<%= choice %> class="ml-2" id="choice-<%= choice %>" />
+              <label for="choice-<%= choice %>" class="ml-2 text-sm"><%= name %></label>
+            </div>
+            <% end %>
+            <br>
+            <div>
+              <input type="submit" class="px-4 py-2 font-semibold text-[#500000] border-[#500000] hover:bg-[#ca8484] bg-[#DBABAB] hover:cursor-pointer rounded" value="Submit" />
+            </div>
+          </form>
+        </div>
+        <% end %>
+      </div>
+  </div>
+  <% if !@correctAnswer.nil?%>
+  <div class="container">
+  <%= button_to "Next Student", getDueStudentQuiz() , class:"mt-4 font-source-serif-pro px-4 py-2 font-semibold text-[#500000] border-[#500000] hover:bg-[#ca8484] bg-[#DBABAB] hover:cursor-pointer rounded", :method=>:get  %>
+  </div>
+  <% end %>
+</div>

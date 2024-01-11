@@ -1,0 +1,45 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+studentOne:
+  id: 1
+  firstname: MyString
+  lastname: MyString
+  uin: 1
+  email: MyString
+  classification: MyString
+  major: MyString
+  notes: MyText
+  teacher: test@gmail.com
+
+studentTwo:
+  id: 2
+  firstname: MyString
+  lastname: MyString
+  uin: 2
+  email: MyString
+  classification: MyString
+  major: MyString
+  notes: MyText
+  teacher: test@gmail.com
+
+studentFourNilName:
+  id: 4
+  firstname: ""
+  lastname: ""
+  uin: 3
+  email: MyString
+  classification: MyString
+  major: MyString
+  notes: MyText
+  teacher: test@gmail.com
+
+studentFive:
+  id: 5
+  firstname: MyString
+  lastname: MyString
+  uin: 1234567
+  email: MyString
+  classification: MyString
+  major: MyString
+  notes: MyText
+  teacher: test@gmail.com

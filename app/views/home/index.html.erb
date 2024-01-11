@@ -1,0 +1,126 @@
+<style>
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+   
+    font-size: 1rem;
+  }
+
+  .styled-table th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .styled-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  .styled-table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+</style>
+
+
+
+
+
+
+<div class="z-0 text-[#500000] flex flex-col m-auto my-5 drop-shadow-xl bg-white rounded w-5/6 items-center text-center">
+  <div class="my-3 font-dancing-script text-[3.5rem] w-5/6 border-4 p-2 border-[#d4d4d4] border-dotted">
+      <div>
+        <h1>Howdy Professor<%= current_user.lastname == "" ? "!" : " #{current_user.lastname}!"%></h1>
+      </div>
+  </div>
+  <div class="container">
+    <div class="grid">
+      <div  class="">
+        <h2 class="text-[1.5rem] font-source-serif-pro mt-2">Welcome Back!</h2>
+        <p class="text-[1.15rem] font-source-serif-pro mt-2 mb-6"><b>Students due for you to practice:</b> <%= getNumDue() %></p>
+        <% if getNumDue() > 0 %>
+        <a  class="font-fira-sans px-4 py-3 bg-[#eacece] hover:bg-[#DBABAB] drop-shadow rounded-xl border-2 border-[#e5c2c2]" href= <%= getDueStudentQuiz() %> >Practice now!</a>
+        <% end %>
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+  <div class="flex justify-center items-center container w-auto mt-6">
+    <details class="font-fira-sans mt-1 mb-8 bg-gray-200 hover:bg-gray-300 px-4 py-3 drop-shadow rounded-xl border-2 flex items-center container" id="statisticsDetails">
+      <summary class="list-none hover:underline hover:underline-offset-4 cursor-pointer" onclick="toggleStatistics()">
+        View More Statistics
+      </summary>
+      <br>
+      <div>
+        <div class="row gx-2 mb-3 p-3">
+          <div class="border border-white rounded p-4">
+            <div class="row p-2 pt-0">
+              <div class="col font-fira-sans">
+                <p><h4 class="m-2">Teaching Summary:</h4></p>
+                <p><b>Years:</b> <%= getYears() %></p>
+                <p><b>Semesters:</b> <%= Course.where(teacher:@id).distinct.count(:semester)%></p>
+                <p><b>Courses:</b> <%= Course.where(teacher:@id).distinct.count(:course_name)%></p>
+                <p><b>Students:</b> <%= Student.where(teacher:@id).distinct.count(:uin)%></p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Course Name</th>
+          <th>Semester</th>
+          <th>Number of Students to Practice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% courses = Course.where(teacher: @id) %>
+        <% courses.each do |course| %>
+          <tr>
+            <td><%= course.course_name %></td>
+            <td><%= course.semester %></td>
+            <td><%= getStudentsDueCourse(course) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>  
+    </details>
+    </div>
+</div>
+
+  
+  
+  <% if false %>
+  <div class="row gx-2 mb-2">
+    <% recentCourses = Course.where(teacher:@id).order(updated_at: :desc).limit(3)%>
+    <% recentCourses.each do |course| %>
+      <div class="col">
+        <div class="bg-light border rounded-3">
+        </div>
+      
+    <% end %>
+  </div>
+  <% end %>
+
+</div>
+
+<script>
+  function toggleStatistics() {
+    const details = document.getElementById('statisticsDetails');
+    const summary = details.querySelector('summary');
+
+    if (details.open) {
+      summary.textContent = 'View More Statistics';
+    } else {
+      summary.textContent = 'Show Less Statistics';
+    }
+  }
+</script>

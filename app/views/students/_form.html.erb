@@ -1,0 +1,87 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.4/tailwind.min.css">
+</head>
+
+<%= form_with(model: @student) do |form| %>
+  <% if @student.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
+
+      <ul>
+        <% @student.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="font-source-serif-pro px-6 py-4 rounded drop-shadow bg-white">
+    <div class="grid grid-cols-4 grid-rows-3">
+      <div class="col-span-2">
+        <%= form.label :firstname, class: "mb-1 block" %>
+        <%= form.text_field :firstname, class: "mb-2 rounded bg-gray-100 border border-gray-300 w-3/4" %>
+      </div>
+
+      <div class="col-span-2">
+        <%= form.label :lastname, class: "mb-1 block" %>
+        <%= form.text_field :lastname, class: "mb-2 rounded bg-gray-100 border border-gray-300 w-3/4" %>
+      </div>
+
+      <div class="col-span-2">
+        <%= form.label :email, class: "mb-1 block" %>
+        <%= form.text_field :email, pattern: '^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zAZ0-9]+\.)+[a-zA-Z]{2,}))$', title: "Incorrect email format", class: "mb-2 rounded bg-gray-100 border border-gray-300 w-3/4"  %>
+      </div>
+
+      <div>
+        <%= form.label :major, class: "mb-1 block" %>
+        <%= form.text_field :major, pattern: '(\b[A-Za-z\s]+\b)', title: "([A-Za-z\s]+) For example MCS", class: "mb-2 rounded bg-gray-100 border border-gray-300" %>
+      </div>
+
+      <div>
+        <%= form.label :classification, class: "mb-1 block" %>
+        <%= form.text_field :classification, class: "mb-2 rounded bg-gray-100 border border-gray-300" %>
+      </div>
+
+      <div>
+        <%= form.label :uin, class: "mb-1 block" %>
+        <%= form.text_field :uin, pattern: '\b[0-9]{9}\b', title: "UIN should be 9 digits", class: "mb-2 rounded bg-gray-100 border border-gray-300"  %>
+      </div>
+
+      <div>
+        <%= form.label :create_tag, class: "mb-2 block" %>
+        <%= form.text_field :create_tag, class: "mb-2 rounded bg-gray-100 border border-gray-300"  %>
+      </div>
+
+      <% if Tag.where(teacher: current_user.email).length > 0 %>
+        <div class="col-span-1">
+          <%= form.label :image, style: "display: block" %>
+          <%= form.file_field :image, class: "mb-2 mt-4" %>
+        </div>
+      <% else %>
+        <div class="col-span-2">
+          <%= form.label :image, style: "display: block" %>
+          <%= form.file_field :image, class: "mb-2 mt-4" %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if Tag.where(teacher: current_user.email).length > 0 %>
+      <div>
+        <%= form.label :tags, style: "display: block" %>
+        <i>(Hold Ctrl to select or unselect tags)</i>
+        <br>
+        <% if StudentsTag.where(student_id: @student.id).length != 0 %>
+          <%= form.select :tags, options_for_select(Tag.where(teacher: current_user.email).map{ |tag| tag.tag_name }, selected: Tag.where(id: StudentsTag.where(student_id: @student.id).map { |record| record.tag_id }, teacher: current_user.email).map { |tag| tag.tag_name }  ), {}, multiple: true, class: "mb-2 h-auto rounded bg-gray-100 border border-gray-300" %>
+        <% end %>
+      </div>
+    <% end %>
+    
+    <%= form.hidden_field :last_practice_at, value: Time.now %>
+
+    <div class="col-span-4 flex justify-center hover:underline h-full">
+      <div class="text-center p-2 w-1/4 font-source-serif-pro mt-2 mb-2 rounded border border-[#500000] hover-bg-[#ca8484] bg-[#DBABAB]">
+        <%= form.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>
