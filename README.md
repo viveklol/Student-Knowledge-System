@@ -1,7 +1,6 @@
 # Student Knowledge System
-   ![image](https://github.com/Knowledge-Ninjas/student_knowledge_system/assets/143157800/2dd6f3bf-c9d9-4b38-b50e-8769b464c694)
 
-A Ruby on Rails web application for instructors to manage student records across courses. You can access our web application by clicking on the link below and creating a new account using your TAMU email id.
+A Ruby on Rails web application for instructors to manage student records across courses.
 
 (https://sks-tamu-dev-e3e46be25a57.herokuapp.com/)
 
@@ -141,14 +140,3 @@ We have already verified above the tests are running, the commands to run the te
 * Run rspec tests: `bundle exec rspec`
 
 You can verify the results by checking the coverage report located under the coverage folder (index.html).
-
-## Our Team
-
-Please leave us a message to any of our emails below for queries regarding the Project.
-
-### Knowledge Ninjas - CSCE 606 2023B - Fall 2023
-
-* [Shubham Mhaske](mailto:shubhammhaske@tamu.edu)
-* [Vivek Narukurthi](mailto:vivekn@tamu.edu)
-* [Akshit Bansal](mailto:akshit.bansal@tamu.edu)
-* [Shresth Kushwaha](mailto:shresth.kushwaha@tamu.edu)
